@@ -1,0 +1,73 @@
+<div class="flex flex-col min-h-screen">
+  <!-- Main Content -->
+  <div class="flex-grow container mx-auto py-6 px-4">
+    <!-- Search Bar -->
+    <div class="mb-6">
+      <input
+        type="text"
+        class="w-full p-3 pl-10 pr-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Search for Movies, Shows, or Actors..."
+        [(ngModel)]="searchQuery"
+        (input)="onSearch()"
+      />
+    </div>
+
+    <!-- Movies Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div
+        *ngFor="let movie of filteredMovies"
+        class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200"
+      >
+        <img
+          src="https://via.placeholder.com/150x200.png?text={{ movie.title }}"
+          alt="{{ movie.title }}"
+          class="w-full h-64 object-cover"
+        />
+        <div class="p-4">
+          <h3 class="text-lg font-semibold text-gray-800">{{ movie.title }}</h3>
+          <p class="text-sm text-gray-600">
+            {{ movie.description | slice: 0:100 }}...
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination Div -->
+  <div class="py-4 bg-gray-100 flex justify-center items-center space-x-2">
+    <!-- Left Arrow (Previous Page) -->
+    <button
+      (click)="decreasePageCount()"
+      class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+      [disabled]="currentPage === 1"
+    >
+      <!-- Left Arrow Icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+
+    <!-- Page Buttons -->
+    <button
+      *ngFor="let page of pages"
+      (click)="changePage(page)"
+      [class.bg-blue-500]="currentPage === page"
+      [class.text-white]="currentPage === page"
+      class="px-4 py-2 border rounded-lg hover:bg-blue-500 hover:text-white mx-1"
+    >
+      {{ page }}
+    </button>
+
+    <!-- Right Arrow (Next Page) -->
+    <button
+      (click)="increasePageCount()"
+      class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+      [disabled]="currentPage === totalPages"
+    >
+      <!-- Right Arrow Icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+</div>

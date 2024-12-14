@@ -1,0 +1,43 @@
+<div class="absolute w-full h-full overflow-auto top-0 left-0 right-0 bottom-0">
+    <app-sidebar></app-sidebar>
+
+    <div class="w-full flex flex-col justify-start items-start lg:pl-64">
+        <div class="w-full bg-white border-b border-gray-200 lg:flex hidden justify-end items-center space-x-3 px-5 py-3">
+            <button type="button" class="flex items-center space-x-2" (click)="toggleUserMenu()">
+                <img id="avatarButton" class="w-10 h-10 rounded-full cursor-pointer"
+                src="https://ui-avatars.com/api/?name=John+Doe&color=FFFFFF&background=56bdc8" alt="User dropdown" />
+                <div class="flex flex-col justify-center items-start">
+                    <span class="text-sm text-gray-500 dark:text-white font-bold">John Doe</span>
+                    <span class="text-xs text-gray-500 dark:text-white font-medium">john.doe@gmail.com</span>
+                </div>
+            </button>
+            <div class="absolute lg:top-12 lg:mt-2 top-32 border border-gray-200 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                [ngClass]="{'hidden': !showUserMenu}">
+                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
+                    <li>
+                        <a [routerLink]="['/']" (click)="toggleUserMenu()"
+                            class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white flex items-center gap-2 text-gray-500">
+                            <fa-icon [icon]="faHome"></fa-icon> Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/profile']" (click)="toggleUserMenu()"
+                            class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white flex items-center gap-2 text-gray-500">
+                            <fa-icon [icon]="faUser"></fa-icon> My profile
+                        </a>
+                    </li>
+                </ul>
+                <div class="py-1">
+                    <a [routerLink]="['/auth']" (click)="toggleUserMenu()"
+                        class="flex items-center gap-2 py-2 px-4 text-sm text-red-700 hover:bg-red-100 dark:hover:bg-red-600 dark:text-red-200 dark:hover:text-white">
+                        <fa-icon [icon]="faSignOut"></fa-icon> Sign out
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full overflow-x-hidden overflow-y-auto">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

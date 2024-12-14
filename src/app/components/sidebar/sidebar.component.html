@@ -1,0 +1,152 @@
+<nav
+    class="lg:left-0 lg:block lg:fixed lg:top-0 lg:bottom-0 lg:overflow-y-auto lg:flex-row lg:flex-nowrap lg:overflow-hidden lg:border-r border-b border-gray-200 bg-white flex flex-wrap items-center justify-between relative lg:w-64 z-10 py-4 px-6">
+    <div
+        class="lg:flex-col lg:items-stretch lg:min-h-full lg:flex-nowrap px-0 flex flex-wrap items-center justify-between gap-2 w-full mx-auto">
+        <div class="flex items-center gap-2">
+            <!-- Toggler -->
+            <button
+                class="cursor-pointer text-black opacity-50 lg:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
+                type="button" (click)="toggleCollapseShow('bg-white m-2 py-3 px-6 border border-gray-200')">
+                <fa-icon [icon]="faBars"></fa-icon>
+            </button>
+            <!-- Brand -->
+            <a class="text-left lg:pb-2 text-gray-600 mr-0 text-xs uppercase font-bold  py-2 px-0 flex items-center gap-2"
+                href="javascript:void(0)">
+                <img src="assets/images/angular.png" alt="Angular Logo" class="w-6" />
+                Ng Tailwind Starter
+            </a>
+        </div>
+        <div class="lg:hidden flex justify-end items-center space-x-3">
+            <button type="button" class="flex items-center space-x-2" (click)="toggleUserMenu()">
+                <img id="avatarButton" class="w-10 h-10 rounded-full cursor-pointer"
+                src="https://ui-avatars.com/api/?name=John+Doe&color=FFFFFF&background=56bdc8" alt="User dropdown" />
+            </button>
+            <div class="absolute top-16 border border-gray-200 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                [ngClass]="{'hidden': !showUserMenu}">
+                <div class="flex flex-col justify-center items-start py-2 px-3">
+                    <span class="text-sm text-gray-500 dark:text-white font-bold">John Doe</span>
+                    <span class="text-xs text-gray-500 dark:text-white font-medium">john.doe@gmail.com</span>
+                </div>
+                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
+                    <li>
+                        <a [routerLink]="['/']" (click)="toggleUserMenu()"
+                            class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white flex items-center gap-2 text-gray-500">
+                            <fa-icon [icon]="faHome"></fa-icon> Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/profile']" (click)="toggleUserMenu()"
+                            class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white flex items-center gap-2 text-gray-500">
+                            <fa-icon [icon]="faUser"></fa-icon> My profile
+                        </a>
+                    </li>
+                </ul>
+                <div class="py-1">
+                    <a [routerLink]="['/auth']" (click)="toggleUserMenu()"
+                        class="flex items-center gap-2 py-2 px-4 text-sm text-red-700 hover:bg-red-100 dark:hover:bg-red-600 dark:text-red-200 dark:hover:text-white">
+                        <fa-icon [icon]="faSignOut"></fa-icon> Sign out
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Collapse -->
+        <div class="lg:flex lg:flex-col lg:items-stretch lg:opacity-100 lg:relative lg:mt-4 lg:shadow-none shadow-lg absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded"
+            [ngClass]="collapseShow">
+            <!-- Collapse header -->
+            <div class="lg:min-w-full lg:hidden block pb-4 mb-4 border-b border-solid border-gray-200">
+                <div class="flex flex-wrap">
+                    <div class="w-8/12">
+                        <a class="text-left lg:pb-2 text-gray-600 mr-0 flex items-center gap-2 text-xs uppercase font-bold p-4 px-0"
+                            href="javascript:void(0)">
+                            <img src="assets/images/angular.png" alt="Angular Logo" class="w-6" />
+                            Ng Tailwind Starter
+                        </a>
+                    </div>
+                    <div class="w-4/12 flex justify-end">
+                        <button type="button"
+                            class="cursor-pointer text-black opacity-50 lg:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
+                            (click)="toggleCollapseShow('hidden')">
+                            <fa-icon [icon]="faTimes"></fa-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Navigation -->
+            <ul class="lg:flex-col lg:min-w-full flex flex-col list-none mt-5">
+                <li class="items-center mb-2">
+                    <span class="text-gray-500 font-bold text-sm uppercase">
+                        Main menu
+                    </span>
+                </li>
+                <li class="items-center">
+                    <a 
+                        class="text-gray-500 hover:text-blue-600 text-xs uppercase py-3 font-medium flex items-center gap-2" 
+                        [routerLink]="['/']" [routerLinkActive]="'text-blue-500'" [routerLinkActiveOptions]="{exact: true}">
+                        <fa-icon [icon]="faHome"></fa-icon>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <hr class="my-4 lg:min-w-full" />
+                <li class="items-center mb-2">
+                    <span class="text-gray-500 font-bold text-sm uppercase">
+                        User account
+                    </span>
+                </li>
+                <li class="items-center">
+                    <a 
+                        class="text-gray-500 hover:text-blue-600 text-xs uppercase py-3 font-medium flex items-center gap-2" 
+                        [routerLink]="['/profile']" [routerLinkActive]="'text-blue-500'" [routerLinkActiveOptions]="{exact: true}">
+                        <fa-icon [icon]="faUser"></fa-icon>
+                        <span>My profile</span>
+                    </a>
+                </li>
+                <hr class="my-4 lg:min-w-full" />
+                <!-- <li class="items-center mb-2">
+                    <span class="text-gray-500 font-bold text-sm uppercase">
+                        Authentication
+                    </span>
+                </li>
+                <li class="items-center">
+                    <a 
+                        class="text-gray-500 hover:text-blue-600 text-xs uppercase py-3 font-medium flex items-center gap-2" 
+                        [routerLink]="['/auth']" [routerLinkActive]="'text-blue-500'" [routerLinkActiveOptions]="{exact: true}">
+                        <fa-icon [icon]="faSignIn"></fa-icon>
+                        <span>Login</span>
+                    </a>
+                </li>
+                <li class="items-center">
+                    <a 
+                        class="text-gray-500 hover:text-blue-600 text-xs uppercase py-3 font-medium flex items-center gap-2" 
+                        [routerLink]="['/auth/register']" [routerLinkActive]="'text-blue-500'" [routerLinkActiveOptions]="{exact: true}">
+                        <fa-icon [icon]="faUserPlus"></fa-icon>
+                        <span>Register</span>
+                    </a>
+                </li>
+                <li class="items-center">
+                    <a 
+                        class="text-gray-500 hover:text-blue-600 text-xs uppercase py-3 font-medium flex items-center gap-2" 
+                        [routerLink]="['/auth/forgot-password']" [routerLinkActive]="'text-blue-500'" [routerLinkActiveOptions]="{exact: true}">
+                        <fa-icon [icon]="faLock"></fa-icon>
+                        <span>Forgot password</span>
+                    </a>
+                </li>
+                <li class="items-center">
+                    <a 
+                        class="text-gray-500 hover:text-blue-600 text-xs uppercase py-3 font-medium flex items-center gap-2" 
+                        [routerLink]="['/auth/recover-password']" [routerLinkActive]="'text-blue-500'" [routerLinkActiveOptions]="{exact: true}">
+                        <fa-icon [icon]="faLockOpen"></fa-icon>
+                        <span>Recover password</span>
+                    </a>
+                </li>
+                <li class="items-center">
+                    <a 
+                        class="text-gray-500 hover:text-blue-600 text-xs uppercase py-3 font-medium flex items-center gap-2" 
+                        [routerLink]="['/auth/verify']" [routerLinkActive]="'text-blue-500'" [routerLinkActiveOptions]="{exact: true}">
+                        <fa-icon [icon]="faUserCheck"></fa-icon>
+                        <span>Verify account</span>
+                    </a>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+</nav>
