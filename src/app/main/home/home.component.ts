@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MovieService } from 'src/app/services/movie.service';
 
 @Component({
   selector: 'app-home',
@@ -7,539 +8,46 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   searchQuery: string = ''; // For search bar input
-  movies: any[] = []; // Array to hold all movies
-  filteredMovies: any[] = []; // Array to hold filtered movies
+  movies: any[] = []; // Array to hold all movies from the API
+  filteredMovies: any[] = []; // Array to hold movies filtered by search and pagination
   currentPage: number = 1; // Current page for pagination
   moviesPerPage: number = 8; // Number of movies per page
   totalPages: number = 1; // Total number of pages
-  maxPages: number = 5; // Maximum number of pages to show
-  pages: number[] = []; // Array of page numbers for buttons
+  totalItems: number = 0; // Total items from the API
+  pages: number[] = []; // Array of page numbers for pagination buttons
 
-  constructor() {}
+  constructor(private movieService: MovieService) {}
 
   ngOnInit(): void {
-    // Fetch movies data (this can be replaced with an API call)
- // Example movie data
- this.movies = [
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5625" },
-    show_id: "s1",
-    type: "Movie",
-    title: "Dick Johnson Is Dead",
-    director: "Kirsten Johnson",
-    country: "United States",
-    date_added: "September 25, 2021",
-    release_year: 2020,
-    rating: "PG-13",
-    duration: "90 min",
-    listed_in: "Documentaries",
-    description:
-      "As her father nears the end of his life, filmmaker Kirsten Johnson stages his death in inventive and comical ways to help them both face the inevitable.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Another Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "SecondLast Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-  {
-    _id: { $oid: "6758aaf2ab8a0eb6d9be5626" },
-    show_id: "s2",
-    type: "Movie",
-    title: "Last Movie",
-    director: "John Doe",
-    country: "Canada",
-    date_added: "August 15, 2020",
-    release_year: 2019,
-    rating: "R",
-    duration: "120 min",
-    listed_in: "Thrillers",
-    description:
-      "A gripping thriller about a man on the run who discovers a shocking conspiracy.",
-  },
-];
+    this.fetchMovies(); // Fetch movies from the API on component initialization
+  }
 
-
-    // Set total pages and initialize filteredMovies
-    this.totalPages = Math.ceil(this.movies.length / this.moviesPerPage);
-    this.updateMoviesGrid();
-    this.updatePages();
+  // Fetch movies from API
+  fetchMovies(): void {
+    this.movieService.getMovies(this.currentPage, this.moviesPerPage).subscribe(
+      (response: any) => {
+        console.log('API Response:', response); // Debugging: Log the API response
+        this.movies = response.data; // Extract the movies array
+        this.totalPages = response.pagination.totalPages; // Total pages from API
+        this.totalItems = response.pagination.totalItems; // Total items from API
+        this.updateMoviesGrid(); // Update the filtered movies grid
+      },
+      (error) => {
+        console.error('Error fetching movies:', error); // Log any errors
+      }
+    );
   }
 
   // Update the filteredMovies array based on the current page and search query
   updateMoviesGrid(): void {
-    const startIndex = (this.currentPage - 1) * this.moviesPerPage;
-    const endIndex = startIndex + this.moviesPerPage;
-
     // Apply search filter if searchQuery is not empty
     const filtered = this.movies.filter((movie) =>
-      movie.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+      movie.title?.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
 
-    this.totalPages = Math.ceil(filtered.length / this.moviesPerPage);
-    this.filteredMovies = filtered.slice(startIndex, endIndex);
-
-    // Update pages whenever the grid changes
-    this.updatePages();
+    this.filteredMovies = filtered.slice(0, this.moviesPerPage); // Slice to fit the current page
+    console.log('Filtered Movies:', this.filteredMovies); // Debugging: Log filtered movies
+    this.updatePages(); // Update the pagination buttons
   }
 
   // Handle search bar input
@@ -548,36 +56,36 @@ export class HomeComponent implements OnInit {
     this.updateMoviesGrid();
   }
 
-  // Change the current page and update the movies grid
+  // Change the current page and fetch movies for that page
   changePage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
-      this.updateMoviesGrid();
+      this.fetchMovies(); // Fetch new movies for the selected page
     }
   }
 
-  // Increase the maximum number of pages
+  // Increase the current page count
   increasePageCount(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
-      this.updateMoviesGrid();
+      this.fetchMovies(); // Fetch new movies for the next page
     }
   }
 
-
-  // Decrease the maximum number of pages
+  // Decrease the current page count
   decreasePageCount(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.updateMoviesGrid();
+      this.fetchMovies(); // Fetch new movies for the previous page
     }
   }
 
   // Update the pages array for pagination buttons
   updatePages(): void {
-    const startPage = Math.max(1, this.currentPage - Math.floor(this.maxPages / 2));
-    const endPage = Math.min(this.totalPages, startPage + this.maxPages - 1);
+    const startPage = Math.max(1, this.currentPage - 2);
+    const endPage = Math.min(this.totalPages, startPage + 4); // Show up to 5 pages
 
     this.pages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
-  } // <-- Make sure this closing brace is present
+    console.log('Pages:', this.pages); // Debugging: Log the pages
+  }
 }

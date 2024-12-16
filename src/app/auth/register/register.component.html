@@ -2,97 +2,192 @@
     <span class="text-lg font-light text-gray-500 text-center">
         Use the following form to create your user account
     </span>
+
+    <!-- Display error message -->
+    <p *ngIf="errorMessage" class="text-xs text-red-500 text-center">
+        <fa-icon [icon]="faTriangleExclamation"></fa-icon> {{ errorMessage }}
+    </p>
+
     <form class="w-full" [formGroup]="form" (submit)="register()">
+        <!-- Full Name Field -->
         <div class="relative z-0 mb-6 w-full group">
-            <input type="text" name="name" id="name" formControlName="name"
+            <input
+                type="text"
+                name="name"
+                id="name"
+                formControlName="name"
                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-400 peer"
-                placeholder=" " [ngClass]="{'border-red-500': !form.controls['name'].pristine && !form.controls['name'].valid}" />
-            <label for="name"
+                placeholder=" "
+                [ngClass]="{
+                    'border-red-500': form.controls['name'].invalid && form.controls['name'].touched
+                }"
+            />
+            <label
+                for="name"
                 class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-400 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                [ngClass]="{'text-red-500': !form.controls['name'].pristine && !form.controls['name'].valid}">
+                [ngClass]="{
+                    'text-red-500': form.controls['name'].invalid && form.controls['name'].touched
+                }"
+            >
                 Full name
             </label>
-            <span class="text-xs text-red-500" *ngIf="!form.controls['name'].pristine && form.controls['name'].hasError('required')">
+            <span
+                class="text-xs text-red-500"
+                *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched"
+            >
                 <fa-icon [icon]="faTriangleExclamation"></fa-icon> The full name field is required
             </span>
-            <span class="text-xs text-red-500" *ngIf="!form.controls['name'].pristine && form.controls['name'].hasError('maxlength')">
-                <fa-icon [icon]="faTriangleExclamation"></fa-icon> The full name field must not exceed 255 characters
+            <span
+                class="text-xs text-red-500"
+                *ngIf="form.controls['name'].hasError('maxlength') && form.controls['name'].touched"
+            >
+                <fa-icon [icon]="faTriangleExclamation"></fa-icon> Full name must not exceed 255 characters
             </span>
         </div>
+
+        <!-- Email Field -->
         <div class="relative z-0 mb-6 w-full group">
-            <input type="email" name="email" id="email" formControlName="email"
+            <input
+                type="email"
+                name="email"
+                id="email"
+                formControlName="email"
                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-400 peer"
-                placeholder=" " [ngClass]="{'border-red-500': !form.controls['email'].pristine && !form.controls['email'].valid}" />
-            <label for="email"
+                placeholder=" "
+                [ngClass]="{
+                    'border-red-500': form.controls['email'].invalid && form.controls['email'].touched
+                }"
+            />
+            <label
+                for="email"
                 class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-400 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                [ngClass]="{'text-red-500': !form.controls['email'].pristine && !form.controls['email'].valid}">
+                [ngClass]="{
+                    'text-red-500': form.controls['email'].invalid && form.controls['email'].touched
+                }"
+            >
                 Email address
             </label>
-            <span class="text-xs text-red-500" *ngIf="!form.controls['email'].pristine && form.controls['email'].hasError('required')">
+            <span
+                class="text-xs text-red-500"
+                *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched"
+            >
                 <fa-icon [icon]="faTriangleExclamation"></fa-icon> The email address field is required
             </span>
-            <span class="text-xs text-red-500" *ngIf="!form.controls['email'].pristine && form.controls['email'].hasError('email')">
+            <span
+                class="text-xs text-red-500"
+                *ngIf="form.controls['email'].hasError('email') && form.controls['email'].touched"
+            >
                 <fa-icon [icon]="faTriangleExclamation"></fa-icon> This field must be a valid email address
             </span>
         </div>
+
+        <!-- Date of Birth Field -->
         <div class="relative z-0 mb-6 w-full group">
-            <input type="password" name="password" id="password" formControlName="password"
+            <input
+                type="date"
+                name="date"
+                id="date"
+                formControlName="date"
                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-400 peer"
-                placeholder=" " [ngClass]="{'border-red-500': !form.controls['password'].pristine && !form.controls['password'].valid}" />
-            <label for="password"
+                placeholder=" "
+                [ngClass]="{
+                    'border-red-500': form.controls['date'].invalid && form.controls['date'].touched
+                }"
+            />
+            <label
+                for="date"
                 class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-400 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                [ngClass]="{'text-red-500': !form.controls['password'].pristine && !form.controls['password'].valid}">
+                [ngClass]="{
+                    'text-red-500': form.controls['date'].invalid && form.controls['date'].touched
+                }"
+            >
+                DOB
+            </label>
+            <span
+                class="text-xs text-red-500"
+                *ngIf="form.controls['date'].hasError('required') && form.controls['date'].touched"
+            >
+                <fa-icon [icon]="faTriangleExclamation"></fa-icon> The DOB field is required
+            </span>
+        </div>
+
+        <!-- Password Field -->
+        <div class="relative z-0 mb-6 w-full group">
+            <input
+                type="password"
+                name="password"
+                id="password"
+                formControlName="password"
+                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-400 peer"
+                placeholder=" "
+                [ngClass]="{
+                    'border-red-500': form.controls['password'].invalid && form.controls['password'].touched
+                }"
+            />
+            <label
+                for="password"
+                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-400 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                [ngClass]="{
+                    'text-red-500': form.controls['password'].invalid && form.controls['password'].touched
+                }"
+            >
                 Password
             </label>
-            <span class="text-xs text-red-500" *ngIf="!form.controls['password'].pristine && form.controls['password'].hasError('required')">
-                <fa-icon [icon]="faTriangleExclamation"></fa-icon> The password field is required
+            <span
+                class="text-xs text-red-500"
+                *ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched"
+            >
+                <fa-icon [icon]="faTriangleExclamation"></fa-icon> Password is required
+            </span>
+            <span
+                class="text-xs text-red-500"
+                *ngIf="form.controls['password'].hasError('minlength') && form.controls['password'].touched"
+            >
+                <fa-icon [icon]="faTriangleExclamation"></fa-icon> Password must be at least 6 characters
             </span>
         </div>
+
+        <!-- Password Confirmation Field -->
         <div class="relative z-0 mb-6 w-full group">
-            <input type="password" name="password_confirmation" id="password_confirmation" formControlName="password_confirmation"
+            <input
+                type="password"
+                name="password_confirmation"
+                id="password_confirmation"
+                formControlName="password_confirmation"
                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-400 peer"
-                placeholder=" " [ngClass]="{'border-red-500': !form.controls['password_confirmation'].pristine && !form.controls['password_confirmation'].valid}" />
-            <label for="password_confirmation"
+                placeholder=" "
+                [ngClass]="{
+                    'border-red-500': form.controls['password_confirmation'].invalid && form.controls['password_confirmation'].touched
+                }"
+            />
+            <label
+                for="password_confirmation"
                 class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-400 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                [ngClass]="{'text-red-500': !form.controls['password_confirmation'].pristine && !form.controls['password_confirmation'].valid}">
+                [ngClass]="{
+                    'text-red-500': form.controls['password_confirmation'].invalid && form.controls['password_confirmation'].touched
+                }"
+            >
                 Password confirmation
             </label>
-            <span class="text-xs text-red-500" *ngIf="!form.controls['password_confirmation'].pristine && form.controls['password_confirmation'].hasError('required')">
-                <fa-icon [icon]="faTriangleExclamation"></fa-icon> The password confirmation field is required
+            <span
+                class="text-xs text-red-500"
+                *ngIf="form.controls['password_confirmation'].hasError('required') && form.controls['password_confirmation'].touched"
+            >
+                <fa-icon [icon]="faTriangleExclamation"></fa-icon> Password confirmation is required
             </span>
         </div>
-        <button type="submit"
-            class="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-600 shadow hover:shadow-lg uppercase">
+
+        <button
+            type="submit"
+            class="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-600 shadow hover:shadow-lg uppercase"
+        >
             Register
         </button>
     </form>
+
     <p class="pb-10 text-gray-500 text-sm font-base text-center w-full">
         Back to login page?
-        <br>
-        <a [routerLink]="['/auth']" class="text-blue-500 hover:underline">
-            Click here
-        </a>
+        <br />
+        <a [routerLink]="['/auth']" class="text-blue-500 hover:underline">Click here</a>
     </p>
-    <!-- <p class="text-gray-400 text-sm font-base text-center w-full uppercase flex flex-row justify-center items-center gap-2">
-        <span class="w-8 border-t border-gray-200"></span>
-        Or
-        <span class="w-8 border-t border-gray-200"></span>
-    </p>
-    <div class="w-full flex flex-row flex-wrap gap-2 text-center justify-center items-center">
-        <button type="button" class="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 mb-2">
-            <fa-icon class="text-lg" [icon]="faFacebookF"></fa-icon>
-          </button>
-          <button type="button" class="text-white bg-[#1da1f2] hover:bg-[#1da1f2]/90 focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 mb-2">
-            <fa-icon class="text-lg" [icon]="faTwitter"></fa-icon>
-          </button>
-          <button type="button" class="text-white bg-[#555555] hover:bg-[#555555]/90 focus:ring-4 focus:outline-none focus:ring-[#555555]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#555555]/30 mb-2">
-            <fa-icon class="text-lg" [icon]="faGithub"></fa-icon>
-          </button>
-          <button type="button" class="text-white bg-[#DB4437] hover:bg-[#DB4437]/90 focus:ring-4 focus:outline-none focus:ring-[#DB4437]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#DB4437]/55 mb-2">
-            <fa-icon class="text-lg" [icon]="faGoogle"></fa-icon>
-          </button>
-          <button type="button" class="text-white bg-[#171515] hover:bg-[#171515]/90 focus:ring-4 focus:outline-none focus:ring-[#171515]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#171515]/50 dark:hover:bg-[#171515]/30 mb-2">
-            <fa-icon class="text-lg" [icon]="faApple"></fa-icon>
-          </button> -->
-    <!-- </div> -->
 </div>

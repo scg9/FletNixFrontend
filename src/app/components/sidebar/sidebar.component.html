@@ -13,7 +13,7 @@
             <a class="text-left lg:pb-2 text-gray-600 mr-0 text-xs uppercase font-bold  py-2 px-0 flex items-center gap-2"
                 href="javascript:void(0)">
                 <img src="assets/images/angular.png" alt="Angular Logo" class="w-6" />
-                Ng Tailwind Starter
+                Welcome to Netify
             </a>
         </div>
         <div class="lg:hidden flex justify-end items-center space-x-3">
@@ -24,9 +24,9 @@
             <div class="absolute top-16 border border-gray-200 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                 [ngClass]="{'hidden': !showUserMenu}">
                 <div class="flex flex-col justify-center items-start py-2 px-3">
-                    <span class="text-sm text-gray-500 dark:text-white font-bold">John Doe</span>
-                    <span class="text-xs text-gray-500 dark:text-white font-medium">john.doe@gmail.com</span>
-                </div>
+                    <span class="text-sm text-gray-500 dark:text-white font-bold">{{ userData.name }}</span>
+                    <span class="text-xs text-gray-500 dark:text-white font-medium">{{ userData.email }}</span>
+                  </div>
                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
                     <li>
                         <a [routerLink]="['/']" (click)="toggleUserMenu()"
@@ -59,7 +59,7 @@
                         <a class="text-left lg:pb-2 text-gray-600 mr-0 flex items-center gap-2 text-xs uppercase font-bold p-4 px-0"
                             href="javascript:void(0)">
                             <img src="assets/images/angular.png" alt="Angular Logo" class="w-6" />
-                            Ng Tailwind Starter
+                            Welcome to FletNix
                         </a>
                     </div>
                     <div class="w-4/12 flex justify-end">
@@ -92,60 +92,16 @@
                         User account
                     </span>
                 </li>
-                <li class="items-center">
+                <li>
                     <a 
-                        class="text-gray-500 hover:text-blue-600 text-xs uppercase py-3 font-medium flex items-center gap-2" 
-                        [routerLink]="['/profile']" [routerLinkActive]="'text-blue-500'" [routerLinkActiveOptions]="{exact: true}">
-                        <fa-icon [icon]="faUser"></fa-icon>
-                        <span>My profile</span>
+                      href="javascript:void(0)" 
+                      class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white flex items-center gap-2 text-gray-500"
+                      (click)="navigateToProfile()"
+                    >
+                      <fa-icon [icon]="faUser"></fa-icon> My profile
                     </a>
-                </li>
+                  </li>
                 <hr class="my-4 lg:min-w-full" />
-                <!-- <li class="items-center mb-2">
-                    <span class="text-gray-500 font-bold text-sm uppercase">
-                        Authentication
-                    </span>
-                </li>
-                <li class="items-center">
-                    <a 
-                        class="text-gray-500 hover:text-blue-600 text-xs uppercase py-3 font-medium flex items-center gap-2" 
-                        [routerLink]="['/auth']" [routerLinkActive]="'text-blue-500'" [routerLinkActiveOptions]="{exact: true}">
-                        <fa-icon [icon]="faSignIn"></fa-icon>
-                        <span>Login</span>
-                    </a>
-                </li>
-                <li class="items-center">
-                    <a 
-                        class="text-gray-500 hover:text-blue-600 text-xs uppercase py-3 font-medium flex items-center gap-2" 
-                        [routerLink]="['/auth/register']" [routerLinkActive]="'text-blue-500'" [routerLinkActiveOptions]="{exact: true}">
-                        <fa-icon [icon]="faUserPlus"></fa-icon>
-                        <span>Register</span>
-                    </a>
-                </li>
-                <li class="items-center">
-                    <a 
-                        class="text-gray-500 hover:text-blue-600 text-xs uppercase py-3 font-medium flex items-center gap-2" 
-                        [routerLink]="['/auth/forgot-password']" [routerLinkActive]="'text-blue-500'" [routerLinkActiveOptions]="{exact: true}">
-                        <fa-icon [icon]="faLock"></fa-icon>
-                        <span>Forgot password</span>
-                    </a>
-                </li>
-                <li class="items-center">
-                    <a 
-                        class="text-gray-500 hover:text-blue-600 text-xs uppercase py-3 font-medium flex items-center gap-2" 
-                        [routerLink]="['/auth/recover-password']" [routerLinkActive]="'text-blue-500'" [routerLinkActiveOptions]="{exact: true}">
-                        <fa-icon [icon]="faLockOpen"></fa-icon>
-                        <span>Recover password</span>
-                    </a>
-                </li>
-                <li class="items-center">
-                    <a 
-                        class="text-gray-500 hover:text-blue-600 text-xs uppercase py-3 font-medium flex items-center gap-2" 
-                        [routerLink]="['/auth/verify']" [routerLinkActive]="'text-blue-500'" [routerLinkActiveOptions]="{exact: true}">
-                        <fa-icon [icon]="faUserCheck"></fa-icon>
-                        <span>Verify account</span>
-                    </a>
-                </li> -->
             </ul>
         </div>
     </div>
