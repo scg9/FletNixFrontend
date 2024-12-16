@@ -2,7 +2,7 @@
   "name": "ng-tailwind-starter",
   "version": "0.0.0",
   "engines": {
-    "node": "16.13.1",
+    "node": "16.20.2",
     "npm": "8.4.1"
   },
   "scripts": {
